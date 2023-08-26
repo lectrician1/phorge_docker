@@ -1,5 +1,15 @@
 # Docker For [Phorge](https://we.phorge.it/)
 
+# FORK
+
+This is a fork of the original. It supports defining a configuration via a config file instead of how it was previously defined through the entrypoint script to the Dockerfile. This allows you to change the configuration without rebuilding the image or restarting the container.
+
+Tename `example-phorge-conf.conf.php` to `phorge-conf.conf.php` and define your configuration there.
+
+To update phorge with your new configuration, run `kill -USR2 1` in the phorge container.
+
+---
+
 ![Docker Image Size (latest)](https://img.shields.io/docker/image-size/zeigren/phorge/latest)
 ![Docker Pulls](https://img.shields.io/docker/pulls/zeigren/phorge)
 
