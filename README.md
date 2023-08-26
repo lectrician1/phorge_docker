@@ -4,7 +4,7 @@
 
 This is a fork of the original. It supports defining a configuration via a config file instead of how it was previously defined through the entrypoint script to the Dockerfile. This allows you to change the configuration without rebuilding the image or restarting the container.
 
-Tename `example-phorge-conf.conf.php` to `phorge-conf.conf.php` and define your configuration there.
+Copy the `example-phorge-conf.conf.php`, `example.env`, and `example-phorge_mailers.json` files, remove "example" from their names, and define your configuration.
 
 To update phorge with your new configuration, run `kill -USR2 1` in the phorge container.
 

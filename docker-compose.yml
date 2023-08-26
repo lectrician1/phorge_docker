@@ -26,7 +26,7 @@ services:
     volumes:
       - phorge_db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=CHANGEME
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASS}
     command: --innodb-buffer-pool-size=268435456 --local-infile=0 --max-allowed-packet=33554432 --sql-mode=STRICT_ALL_TABLES
     networks:
       - phorge_db
@@ -39,11 +39,11 @@ services:
       - phorge_repo:/var/repo
       - ./docker-entrypoint.sh:/docker-entrypoint.sh
       - ./phorge-conf.conf.php:/phorge-conf.conf.php
-      # - ./config/phorge_mailers.json:/usr/src/docker_ph/mailers.json
+      # - ./phorge_mailers.json:/usr/src/docker_ph/mailers.json
     environment:
       # set UPGRADE_ON_RESTART to true to update phorge
       - UPGRADE_ON_RESTART=true
-      - PH_MYSQL_PASS=CHANGEME
+      - PH_MYSQL_PASS=${MYSQL_PASS}
       # - PH_CLUSTER_MAILERS=true
     networks:
       - phorge

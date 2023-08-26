@@ -1,0 +1,13 @@
+[
+  {
+    "key": "gmail",
+    "type": "smtp",
+    "options": {
+        "host": "smtp.gmail.com",
+        "user": "email@gmail.com",
+        "password": "app password",
+        "protocol": "ssl",
+        "port": 465
+    }
+  }
+]
