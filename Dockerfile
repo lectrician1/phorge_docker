@@ -1,15 +1,5 @@
 FROM php:7.4-fpm-alpine
 
-ARG DATE
-ARG VERSION
-
-LABEL org.opencontainers.image.created=$DATE \
-    org.opencontainers.image.authors="Zeigren" \
-    org.opencontainers.image.url="https://github.com/Zeigren/phorge_docker" \
-    org.opencontainers.image.source="https://github.com/Zeigren/phorge_docker" \
-    org.opencontainers.image.version=$VERSION \
-    org.opencontainers.image.title="zeigren/phorge"
-
 RUN apk update \
 	&& apk add --no-cache bash openssh-server openssh-keygen git \
 	git-daemon subversion mercurial freetype libpng libjpeg-turbo libzip \
@@ -30,12 +20,9 @@ RUN apk update \
 	&& ln -s /usr/libexec/git-core/git-http-backend /usr/bin/git-http-backend \
 	&& mkdir -p /usr/src/docker_ph/
 
-COPY env_secrets_expand.sh docker-entrypoint.sh  wait-for.sh /usr/local/bin/
+COPY env_secrets_expand.sh wait-for.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/env_secrets_expand.sh \
-	&& chmod +x /usr/local/bin/docker-entrypoint.sh \
 	&& chmod +x /usr/local/bin/wait-for.sh
-
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 CMD ["php-fpm", "-F"]

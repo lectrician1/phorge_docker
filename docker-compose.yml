@@ -12,7 +12,7 @@ services:
       - phorge
     ports:
       # CHANGE TO "80:80" IF USING CADDY FOR HTTPS
-      - "9080:80"
+      - "80:80"
       # UNCOMMENT IF USING CADDY FOR HTTPS
       # - "443:443"
     environment:
@@ -32,17 +32,17 @@ services:
       - phorge_db
 
   phorge:
-    image: zeigren/phorge:latest # ghcr.io/zeigren/phorge_docker:latest
-    # https://hub.docker.com/r/zeigren/phorge
+    build: .
     volumes:
       - phorge_web:/var/www/html
       - phorge_ssh:/etc/ssh
       - phorge_repo:/var/repo
+      - ./docker-entrypoint.sh:/docker-entrypoint.sh
+      - ./phorge-conf.conf.php:/phorge-conf.conf.php
       # - ./config/phorge_mailers.json:/usr/src/docker_ph/mailers.json
     environment:
       # set UPGRADE_ON_RESTART to true to update phorge
       - UPGRADE_ON_RESTART=true
-      - PH_BASE_URI=https://phorge.yourdomain.test
       - PH_MYSQL_PASS=CHANGEME
       # - PH_CLUSTER_MAILERS=true
     networks:
@@ -51,6 +51,7 @@ services:
     ports:
       # SSH Port
       - 2530:2530
+    entrypoint: ["/docker-entrypoint.sh"]
 
 volumes:
   phorge_db:

@@ -118,30 +118,8 @@ fi
 # -------------------------------------------------------------------------------
 
 echo "configuring phorge"
-
-# start configuration of phorge with docker environment variables
-sudo -n -u www-data ${CONFIG_BIN} set phd.user phuser
-
-sudo -n -u www-data ${CONFIG_BIN} set diffusion.ssh-port ${PH_DIFFUSION_SSH_PORT:-2530}
-
-sudo -n -u www-data ${CONFIG_BIN} set diffusion.ssh-user vcs
-
-sudo -n -u www-data ${CONFIG_BIN} set phabricator.base-uri ${PH_BASE_URI:-https://phorge.yourdomain.test}
-
-sudo -n -u www-data ${CONFIG_BIN} set mysql.pass ${PH_MYSQL_PASS:-CHANGEME}
-
-sudo -n -u www-data ${CONFIG_BIN} set mysql.user ${PH_MYSQL_USER:-root}
-
-sudo -n -u www-data ${CONFIG_BIN} set mysql.host ${PH_MYSQL_HOST:-mariadb}
-
-sudo -n -u www-data ${CONFIG_BIN} set storage.mysql-engine.max-size ${PH_STORAGE_MYSQL_ENGINE_MAX_SIZE:-8388608}
-
-sudo -n -u www-data ${CONFIG_BIN} set pygments.enabled true
-
-if [ "${PH_METAMTA_DEFAULT_ADDRESS}" != "" ]
-then
-    sudo -n -u www-data ${CONFIG_BIN} set metamta.default-address ${PH_METAMTA_DEFAULT_ADDRESS}
-fi
+ln -s /phorge-conf.conf.php ${ROOT}/phorge/conf/phorge-conf.conf.php
+echo phorge-conf.conf.php > ${ROOT}/phorge/conf/local/ENVIRONMENT
 
 if [ "${PH_CLUSTER_MAILERS}" = "true" ]
 then
@@ -181,3 +159,5 @@ fi
 sudo -E -n -u phuser /var/www/html/phorge/bin/phd start
 
 exec "$@"
+
+exec php-fpm -F
