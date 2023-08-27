@@ -1,3 +1,4 @@
 phorge-conf.conf.php
 .env
 phorge_mailers.json
+docker-compose.yml
