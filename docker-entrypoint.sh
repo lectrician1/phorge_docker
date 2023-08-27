@@ -118,7 +118,9 @@ fi
 # -------------------------------------------------------------------------------
 
 echo "configuring phorge"
-ln -s /phorge-conf.conf.php ${ROOT}/phorge/conf/phorge-conf.conf.php
+if [ ! -L ${ROOT}/phorge/conf/phorge-conf.conf.php ]; then
+   ln -s /phorge-conf.conf.php ${ROOT}/phorge/conf/phorge-conf.conf.php
+fi
 echo phorge-conf.conf.php > ${ROOT}/phorge/conf/local/ENVIRONMENT
 
 if [ "${PH_CLUSTER_MAILERS}" = "true" ]

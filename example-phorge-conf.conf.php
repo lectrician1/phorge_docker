@@ -1,8 +1,6 @@
 <?php
 
 return array(
-    // Specify whichever keys and values you want to set.
-    'example.key' => 'examplevalue',
     'phd.user' => 'phuser',
     'diffusion.ssh-port' => getenv('PH_DIFFUSION_SSH_PORT'),
     'diffusion.ssh-user' => 'vcs',
